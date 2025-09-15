@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="./css/styles.css">
     <style>
         body{
-            background-image: url('https://png.pngtree.com/back_origin_pic/05/09/67/76e6c093cf5a460ea668baa610001c89.jpg');
+            background-image: url('https://img.freepik.com/premium-vector/sports-background-vector-sports-day_1316704-45433.jpg?w=2000');
             background-size: cover;
+             background-position: center;
             background-repeat: no-repeat;
         }
         header {
@@ -65,92 +66,106 @@
     </script>
 </head>
 <body class="bg-gray-100">
-    <header class="bg-blue-500 text-white py-4 fixed w-full top-0 z-20 flex justify-between items-center">
+    <header class="text-white py-4 fixed w-full top-0 z-20 flex justify-between items-center" style="background-color: orange;">
         <div class="flex items-center">
             <div>
                 <p>Welcome..! <%= admin.firstName + " " + admin.lastName %></p>
                 <p>Mail: <%= admin.email %></p>
             </div>
         </div>
-        <div class="text-center flex-grow">
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
             <h1 class="text-2xl font-semibold">Admin Dashboard</h1>
         </div>
-        <ul class="flex items-center space-x-4">
-            <li><a href="/signout" class="hover:text-red-500">Sign Out</a></li>
-            <li><a href="#toggleFormSession" class="hover:text-green-500">Add Session/Sports</a></li>
-            <li><a href="#reports" class="hover:text-green-500">Reports</a></li>
-        </ul>
     </header>
+
+    <!-- Sidebar Navigation -->
+    <button id="sidebarToggleBtn" style="position: fixed; top: 90px; left: 10px; z-index: 40; background: orange; color: white; border: none; border-radius: 4px; padding: 6px 12px; cursor: pointer; box-shadow: 1px 1px 6px rgba(0,0,0,0.08);">☰</button>
+    <aside id="sidebarNav" style="position: fixed; top: 80px; left: 0; height: 100vh; width: 200px; background: #fff; z-index: 30; display: flex; flex-direction: column; align-items: flex-start; padding: 24px 12px 0 12px; box-shadow: 2px 0 8px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
+        <button id="sidebarCloseBtn" style="align-self: flex-end; background: none; border: none; font-size: 1.5rem; color: orange; margin-bottom: 16px; cursor: pointer;">&times;</button>
+        <button id="sidebarAddSport" class="w-full mb-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none text-left">Add Sport</button>
+        <button id="sidebarAddSession" class="w-full mb-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none text-left">Add Session</button>
+        <a href="/signout" class="w-full mb-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none text-left block text-center">Sign Out</a>
+        <a href="#reports" class="w-full bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700 focus:outline-none text-left block text-center">Reports</a>
+    </aside>
     
     <div class="w-2/2 overflow-y-auto h-full">
-        <main class="container mx-auto mt-20 pl-4 pr-8">
+        <main class="container mx-auto mt-20 pl-4 pr-8" style="background: rgba(255,255,255,0.7); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 24px;">
             <section id="manage-sports-section" class="h-full">
                 <h2 class="text-2xl font-semibold mb-4">Your Sports</h2>
                 <%- include('adminSportsList.ejs', { sports: sports, sessions, joinedSessions, allPlayers,admin }) %>
             </section>
             
-            <button id="toggleForm" class="bg-blue-500 text-white p-2 rounded mt-4">Add Sport</button>
 
-            <form id="createSportForm" action="/create-sport" style="display: none;" method="post" class="h-full mx-auto bg-white p-8 mt-4 rounded shadow-md slide-down">
-                <input type="hidden" name="adminId" value="<%= admin.id %>" class="hidden">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <!-- The Add Sport button is now in the sidebar -->
+            <!-- Modal Popup for Add Sport -->
+            <div id="modalOverlaySport" style="display:none; position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.4); z-index: 50; justify-content: center; align-items: center;">
+                <div style="background: rgba(255,255,255,0.97); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.18); padding: 32px; max-width: 400px; margin: auto; position: relative;">
+                    <button id="closeModalBtnSport" style="position: absolute; top: 8px; right: 12px; font-size: 1.5rem; background: none; border: none; cursor: pointer;">&times;</button>
+                    <form id="createSportForm" action="/create-sport" method="post" class="h-full mx-auto">
+                        <input type="hidden" name="adminId" value="<%= admin.id %>" class="hidden">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-                <div class="mb-4">
-                    <label for="sportName" class="block text-gray-700 text-sm font-bold mb-2">Sport Name:</label>
-                    <input type="text" id="sportName" name="name" required class="w-full border border-gray-300 p-2 rounded">
+                        <div class="mb-4">
+                            <label for="sportName" class="block text-gray-700 text-sm font-bold mb-2">Sport Name:</label>
+                            <input type="text" id="sportName" name="name" required class="w-full border border-gray-300 p-2 rounded">
+                        </div>
+
+                        <div class="mb-6">
+                            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">Create Sport</button>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
-                <div class="mb-6">
-                    <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">Create Sport</button>
+
+            <!-- The Add Session button is now in the sidebar -->
+            <!-- Modal Popup for Add Session -->
+            <div id="modalOverlay" style="display:none; position: fixed; top:0; left:0; width:100vw; height:100vh; background: rgba(0,0,0,0.4); z-index: 50; justify-content: center; align-items: center;">
+                <div style="background: rgba(255,255,255,0.97); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.18); padding: 32px; max-width: 400px; margin: auto; position: relative;">
+                    <button id="closeModalBtn" style="position: absolute; top: 8px; right: 12px; font-size: 1.5rem; background: none; border: none; cursor: pointer;">&times;</button>
+                    <form id="createSessionForm" action="/create-session" method="post" class="h-full mx-auto">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <div class="mb-4">
+                            <label for="sportId">Sport:</label>
+                            <select id="sportId" name="sportId" required>
+                            <% sports.forEach(sport => { %>
+                                <option value="<%= sport.id %>"><%= sport.name %></option>
+                            <% }); %>
+                            </select>
+                        </div>
+                        <input type="hidden" name="creator" value="<%= admin.email %>">
+
+                        <div class="mb-4">
+                            <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date:</label>
+                            <input type="date" id="date" name="date" class="w-full border border-gray-300 p-2 rounded" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="time" class="block text-gray-700 text-sm font-bold mb-2">Time:</label>
+                            <input type="time" id="time" name="time" class="w-full border border-gray-300 p-2 rounded" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="venue" class="block text-gray-700 text-sm font-bold mb-2">Venue:</label>
+                            <input type="text" id="venue" name="venue" class="w-full border border-gray-300 p-2 rounded" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="teamSize" class="block text-gray-700 text-sm font-bold mb-2">Team-Size :</label>
+                            <input type="text" name="teamSize" class="w-full border border-gray-300 p-2 rounded" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">Create Session</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
-
-
-            <button id="toggleFormSession" class="bg-blue-500 text-white p-2 rounded mt-4">Add Session</button>
-            <section>
-                <form id="createSessionForm" action="/create-session" style="display: none;" method="post" class="h-full mx-auto bg-white p-8 mt-4 rounded shadow-md slide-down">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                    <div class="mb-4">
-                        <label for="sportId">Sport:</label>
-                        <select id="sportId" name="sportId" required>
-                        <% sports.forEach(sport => { %>
-                            <option value="<%= sport.id %>"><%= sport.name %></option>
-                        <% }); %>
-                        </select>
-                    </div>
-                    <input type="hidden" name="creator" value="<%= admin.email %>">
-
-                    <div class="mb-4">
-                        <label for="date" class="block text-gray-700 text-sm font-bold mb-2">Date:</label>
-                        <input type="date" id="date" name="date" class="w-full border border-gray-300 p-2 rounded" required>
-                    </div>
-
-                    <div class="mb-4">
-                        <label for="time" class="block text-gray-700 text-sm font-bold mb-2">Time:</label>
-                        <input type="time" id="time" name="time" class="w-full border border-gray-300 p-2 rounded" required>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="venue" class="block text-gray-700 text-sm font-bold mb-2">Venue:</label>
-                        <input type="text" id="venue" name="venue" class="w-full border border-gray-300 p-2 rounded" required>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <label for="teamSize" class="block text-gray-700 text-sm font-bold mb-2">Team-Size :</label>
-                        <input type="text" name="teamSize" class="w-full border border-gray-300 p-2 rounded" required>
-                    </div>
-                    
-                    <div class="mb-6">
-                        <button type="submit"  class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue">Create Session</button>
-                    </div>
-                    
-                </form>
-            </section>
+            </div>
             
         </main>
     </div>
     <div id="reports" class="w-2/2 overflow-y-auto h-full">
-        <main class="container mx-auto m-4 pl-4 pr-8">
+        <main class="container mx-auto m-4 pl-4 pr-8" style="background: rgba(255,255,255,0.7); border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 24px;">
             <div class="mb-4">
                 <h2 class="text-2xl font-semibold">Database Reports</h2>
             </div>
@@ -208,26 +223,56 @@
         const scrollToTopBtn = document.getElementById('scrollToTopBtn');
         scrollToTopBtn.addEventListener('click', scrollToTop);
         // JavaScript to toggle the form visibility with slide-down animation
-        const toggleFormButton = document.getElementById('toggleForm');
-        const createSportForm = document.getElementById('createSportForm');
-    
-        toggleFormButton.addEventListener('click', function () {
-            createSportForm.style.display = createSportForm.style.display === 'block' ? 'none' : 'block';
-            createSportForm.classList.toggle('slide-down');
-            if (createSportForm.style.display === 'block') {
-                createSportForm.scrollIntoView({ behavior: 'smooth' });
+
+        // Sidebar open/close logic
+        const sidebarToggleBtn = document.getElementById('sidebarToggleBtn');
+        const sidebarNav = document.getElementById('sidebarNav');
+        const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+        let sidebarOpen = true;
+        function openSidebar() {
+            sidebarNav.style.transform = 'translateX(0)';
+            sidebarToggleBtn.style.display = 'none';
+            sidebarOpen = true;
+        }
+        function closeSidebar() {
+            sidebarNav.style.transform = 'translateX(-220px)';
+            sidebarToggleBtn.style.display = 'block';
+            sidebarOpen = false;
+        }
+        sidebarToggleBtn.addEventListener('click', openSidebar);
+        sidebarCloseBtn.addEventListener('click', closeSidebar);
+        // Start with sidebar open
+        openSidebar();
+
+        // Modal logic for Add Sport (sidebar button)
+        const sidebarAddSport = document.getElementById('sidebarAddSport');
+        const modalOverlaySport = document.getElementById('modalOverlaySport');
+        const closeModalBtnSport = document.getElementById('closeModalBtnSport');
+        sidebarAddSport.addEventListener('click', function () {
+            modalOverlaySport.style.display = 'flex';
+        });
+        closeModalBtnSport.addEventListener('click', function () {
+            modalOverlaySport.style.display = 'none';
+        });
+        modalOverlaySport.addEventListener('click', function (e) {
+            if (e.target === modalOverlaySport) {
+                modalOverlaySport.style.display = 'none';
             }
         });
 
-        const toggleFormSessionButton = document.getElementById('toggleFormSession');
-        const createSessionForm = document.querySelector('section form');
-
-        toggleFormSessionButton.addEventListener('click', function () {
-            createSessionForm.style.display = createSessionForm.style.display === 'block' ? 'none' : 'block';
-            createSessionForm.classList.toggle('slide-down');
-
-            if (createSessionForm.style.display === 'block') {
-            createSessionForm.scrollIntoView({ behavior: 'smooth' });
+        // Modal logic for Add Session (sidebar button)
+        const sidebarAddSession = document.getElementById('sidebarAddSession');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        sidebarAddSession.addEventListener('click', function () {
+            modalOverlay.style.display = 'flex';
+        });
+        closeModalBtn.addEventListener('click', function () {
+            modalOverlay.style.display = 'none';
+        });
+        modalOverlay.addEventListener('click', function (e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.style.display = 'none';
             }
         });
     </script>

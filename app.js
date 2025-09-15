@@ -524,8 +524,8 @@ app.get("/sessions/:sportId/:sessionId", async (req, res) => {
   }
 });
 
-// app.listen(3000, () => {
-//   console.log(`Server is running at http://localhost:${3000}`);
-// });
+app.listen(3000, () => {
+  console.log(`Server is running at http://localhost:3000`);
+});
 
 module.exports = app;

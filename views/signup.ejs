@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://wallpapercave.com/wp/wp4390828.jpg');
+            background-image: url('https://static.vecteezy.com/system/resources/previews/004/996/055/original/orange-modern-abstract-background-modern-orange-abstract-design-concept-of-web-page-design-easy-to-edit-illustration-vector.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -19,13 +19,15 @@
             padding: 0;
         }
         .container {
-            max-width: 400px;
-            max-height: 400px;
-            margin: 0 auto;
+            width: 240px;
+            margin: 40px auto 0 auto;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
@@ -47,6 +49,7 @@
             background-color: transparent;
             color: #333;
             border-radius: 4px;
+            cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -54,7 +57,6 @@
             background-color: #007BFF;
             color: #fff;
         }
-
         .login-form {
             display: block;
         }
@@ -125,16 +127,13 @@
             color: #007BFF;
         }
     </style>
-</head>
-<body>
+    </head>
+    <body>
     <div class="centered">
         <div class="container">
-            <h1>Sign-Up</h1>
-            <div class="login-options">
-                <div class="login-option active" id="player-option">
-                    <i class="fas fa-user icon"></i>
-                    Player Sign-Up
-                </div>
+            <div>
+                <i class="fas fa-user-shield icon"></i>
+                Admin Sign-Up
             </div>
             <form method="post" action="/create-player" class="login-form" id="player-form">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -156,11 +155,53 @@
                 </div>
                 <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             </form>
-
+            <form method="post" action="/create-admin" class="login-form" id="admin-form" style="display:none;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <div class="input-group">
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" id="firstNameAdmin" name="firstName" placeholder="First Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" id="lastNameAdmin" name="lastName" placeholder="Last Name">
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope icon"></i>
+                    <input type="email" id="admin-email" name="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock icon"></i>
+                    <input type="password" id="admin-password" name="password" placeholder="Password" required>
+                </div>
+                <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            </form>
             <div class="links-container">
                 <p class=" text-2xl"><a href="login" class="text-blue-500 hover:text-blue-700">Already have an account?</a></p>
             </div>
         </div>
     </div>
 </body>
+<script>
+    const playerOption = document.getElementById("player-option");
+    const adminOption = document.getElementById("admin-option");
+    const playerForm = document.getElementById("player-form");
+    const adminForm = document.getElementById("admin-form");
+
+    playerForm.style.display = "block";
+    adminForm.style.display = "none";
+
+    playerOption.addEventListener("click", () => {
+        playerForm.style.display = "block";
+        adminForm.style.display = "none";
+        playerOption.classList.add("active");
+        adminOption.classList.remove("active");
+    });
+
+    adminOption.addEventListener("click", () => {
+        playerForm.style.display = "none";
+        adminForm.style.display = "block";
+        playerOption.classList.remove("active");
+        adminOption.classList.add("active");
+    });
+</script>
 </html>
