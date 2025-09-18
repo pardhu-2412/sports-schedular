@@ -10,7 +10,7 @@
     <meta http-equiv="Expires" content="0">
     <title>Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
         body{
             background-image: url('https://img.freepik.com/premium-vector/sports-background-vector-sports-day_1316704-45433.jpg?w=2000');
@@ -66,26 +66,27 @@
     </script>
 </head>
 <body class="bg-gray-100">
-    <header class="text-white py-4 fixed w-full top-0 z-20 flex justify-between items-center" style="background-color: orange;">
-        <div class="flex items-center">
-            <div>
-                <p>Welcome..! <%= admin.firstName + " " + admin.lastName %></p>
-                <p>Mail: <%= admin.email %></p>
+    <header class="text-white py-4 fixed w-full top-0 z-20" style="background-color: orange;">
+        <div class="header-inner">
+            <div class="left">
+                <div>
+                    <p>Welcome..! <%= admin.firstName + " " + admin.lastName %></p>
+                    <p>Mail: <%= admin.email %></p>
+                </div>
             </div>
-        </div>
-        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
             <h1 class="text-2xl font-semibold">Admin Dashboard</h1>
+            <div class="right"></div>
         </div>
     </header>
 
     <!-- Sidebar Navigation -->
-    <button id="sidebarToggleBtn" style="position: fixed; top: 90px; left: 10px; z-index: 40; background: orange; color: white; border: none; border-radius: 4px; padding: 6px 12px; cursor: pointer; box-shadow: 1px 1px 6px rgba(0,0,0,0.08);">☰</button>
+    <button id="sidebarToggleBtn" class="btn btn--orange" style="position: fixed; top: 90px; left: 10px; z-index: 40;">☰</button>
     <aside id="sidebarNav" style="position: fixed; top: 80px; left: 0; height: 100vh; width: 200px; background: #fff; z-index: 30; display: flex; flex-direction: column; align-items: flex-start; padding: 24px 12px 0 12px; box-shadow: 2px 0 8px rgba(0,0,0,0.08); transition: transform 0.3s ease;">
-        <button id="sidebarCloseBtn" style="align-self: flex-end; background: none; border: none; font-size: 1.5rem; color: orange; margin-bottom: 16px; cursor: pointer;">&times;</button>
-        <button id="sidebarAddSport" class="w-full mb-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none text-left">Add Sport</button>
-        <button id="sidebarAddSession" class="w-full mb-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 focus:outline-none text-left">Add Session</button>
-        <a href="/signout" class="w-full mb-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none text-left block text-center">Sign Out</a>
-        <a href="#reports" class="w-full bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700 focus:outline-none text-left block text-center">Reports</a>
+        <button id="sidebarCloseBtn" class="btn btn--orange" style="align-self: flex-end; font-size: 1.25rem;">&times;</button>
+        <button id="sidebarAddSport" class="w-full mb-4 btn btn--blue text-left">Add Sport</button>
+        <button id="sidebarAddSession" class="w-full mb-4 btn btn--green text-left">Add Session</button>
+        <a href="/signout" class="w-full mb-4 btn btn--red text-center block">Sign Out</a>
+        <a href="#reports" class="w-full btn btn--purple text-center block">Reports</a>
     </aside>
     
     <div class="w-2/2 overflow-y-auto h-full">

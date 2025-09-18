@@ -1,23 +1,44 @@
 .slide-down {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.slide-down.open {
+    max-height: 1000px;
 }
 
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: pink;
+    font-family: Arial, sans-serif;
+    color: #111827;
+    background-color: #f3f4f6;
 }
 
 header {
     background-color: #3490dc;
+    color: #ffffff;
 }
 
-header h1{
-    margin-left: 38%;
+header .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 56px;
 }
 
+header .header-inner .left,
+header .header-inner .right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+header .header-inner .left { left: 16px; }
+header .header-inner .right { right: 16px; }
+
+h1,h2,h3,h4 { margin: 0; }
 
 .menu-toggle {
     display: block;
@@ -25,7 +46,7 @@ header h1{
     position: fixed;
     top: 15px;
     left: 15px;
-    z-index: 2;
+    z-index: 40;
 }
 
 .menu-toggle span {
@@ -36,12 +57,42 @@ header h1{
     margin-bottom: 5px;
 }
 
+.card {
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn--blue { background: #2563eb; }
+.btn--blue:hover { background: #1d4ed8; }
+
+.btn--green { background: #16a34a; }
+.btn--green:hover { background: #15803d; }
+
+.btn--red { background: #dc2626; }
+.btn--red:hover { background: #b91c1c; }
+
+.btn--purple { background: #7c3aed; }
+.btn--purple:hover { background: #6d28d9; }
+
+.btn--orange { background: #f59e0b; }
+.btn--orange:hover { background: #d97706; }
+
+.btn--gray { background: #374151; }
+.btn--gray:hover { background: #1f2937; }
+
 @media only screen and (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-        position: fixed;
-        top: 15px;
-        left: 15px;
-        z-index: 2;
-    }
+    header .header-inner { min-height: 64px; }
 }

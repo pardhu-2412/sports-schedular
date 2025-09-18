@@ -162,7 +162,7 @@ app.post("/create-admin", async (req, res) => {
       email,
       password: hashedPwd,
     });
-    res.json(newAdmin);
+    res.redirect("/login");
   } catch (error) {
     console.error("Error creating Player:", error.message);
     res.status(500).json({ error: "Internal server error" });
@@ -524,8 +524,5 @@ app.get("/sessions/:sportId/:sessionId", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log(`Server is running at http://localhost:3000`);
-});
 
 module.exports = app;

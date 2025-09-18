@@ -10,18 +10,24 @@
     <meta http-equiv="Expires" content="0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Sports Scheduler</title>
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
         body{
-            background-image: url('https://static.vecteezy.com/system/resources/previews/004/996/055/original/orange-modern-abstract-background-modern-orange-abstract-design-concept-of-web-page-design-easy-to-edit-illustration-vector.jpg');
+            background-image: url('https://wallpapercave.com/wp/wp4390828.jpg');
             background-size: cover;
             background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     </style>
 </head>
+<body> <!-- Centered content vertically and horizontally -->
 
-<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
-    <!-- Centered Home Page Container -->
-    <div style="background: white; padding: 32px 24px; border-radius: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.08); min-width: 320px; max-width: 90vw; text-align: center;">
+    <!-- Todo Home Page -->
+    <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full mx-4"> <!-- Centered container with proper sizing -->
         <%- include('header.ejs') %>
         <p class="py-2 text-2xl font-semibold">Welcome to Sports Scheduler</p>
         <p class="py-2">New Here? <a class="text-green-600" href="/signup">Sign-Up now...</a></p>

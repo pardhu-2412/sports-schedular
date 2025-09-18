@@ -7,10 +7,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Sign-Up</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('https://static.vecteezy.com/system/resources/previews/004/996/055/original/orange-modern-abstract-background-modern-orange-abstract-design-concept-of-web-page-design-easy-to-edit-illustration-vector.jpg');
+            background-image: url('https://wallpapercave.com/wp/wp4390828.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -19,15 +20,13 @@
             padding: 0;
         }
         .container {
-            width: 240px;
-            margin: 40px auto 0 auto;
+            max-width: 400px;
+            max-height: 400px;
+            margin: 0 auto;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         h1 {
@@ -49,7 +48,6 @@
             background-color: transparent;
             color: #333;
             border-radius: 4px;
-            cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -57,6 +55,7 @@
             background-color: #007BFF;
             color: #fff;
         }
+
         .login-form {
             display: block;
         }
@@ -127,13 +126,20 @@
             color: #007BFF;
         }
     </style>
-    </head>
-    <body>
+</head>
+<body>
     <div class="centered">
         <div class="container">
-            <div>
-                <i class="fas fa-user-shield icon"></i>
-                Admin Sign-Up
+            <h1>Sign-Up</h1>
+            <div class="login-options">
+                <div class="login-option active" id="player-option">
+                    <i class="fas fa-user icon"></i>
+                    Player Sign-Up
+                </div>
+                <div class="login-option" id="admin-option">
+                    <i class="fas fa-user-shield icon"></i>
+                    Admin Sign-Up
+                </div>
             </div>
             <form method="post" action="/create-player" class="login-form" id="player-form">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -175,6 +181,7 @@
                 </div>
                 <input type="submit" value="Submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             </form>
+
             <div class="links-container">
                 <p class=" text-2xl"><a href="login" class="text-blue-500 hover:text-blue-700">Already have an account?</a></p>
             </div>
